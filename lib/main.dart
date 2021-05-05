@@ -1,11 +1,11 @@
 // Flutter 1.1: Portfolio App
+// Feature: Swiping to reveal other competencies
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
     home: HomePage(),
     debugShowCheckedModeBanner: false,
-    theme: ThemeData(fontFamily: 'Circular'),
   ));
 }
 
@@ -43,29 +43,17 @@ class HeaderClass extends StatelessWidget {
         style: TextStyle(
             fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
       ),
-      Container(
-        height: 50,
-        width: 50,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(shape: BoxShape.circle, color: primaryColor),
-        child: Center(
-          child: Container(
-            decoration: new BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                    color: Colors.teal, width: 2.0, style: BorderStyle.solid),
-                image: new DecorationImage(
-                    fit: BoxFit.cover, image: AssetImage('images/james.jpg'))),
-          ),
-        ),
+      CircleAvatar(
+        radius: 25,
+        backgroundColor: Colors.teal,
+        child: CircleAvatar(
+            radius: 24, backgroundImage: AssetImage('images/james.jpg')),
       ),
     ]);
   }
 }
 
 class BodyClass extends StatelessWidget {
-  final String text01 = 'User Experience';
-  final String text11 = 'Other Skills';
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -92,15 +80,15 @@ class BodyClass extends StatelessWidget {
             child: Row(
               children: [
                 FirstPage(),
-                SecondPage(text01, () => Cont1(), Colors.orange, 'bio.png'),
-                SecondPage(text11, () => ListCLass(), Colors.blue, 'skill.png')
+                SecondPage(() => Cont1(), Colors.orange, 'bio.png'),
+                SecondPage(() => ListCLass(), Colors.blue, 'skill.png')
               ],
             ),
           ),
         ),
         Positioned.fill(
-            left: MediaQuery.of(context).size.width / 2,
-            top: 620,
+            left: MediaQuery.of(context).size.width * 0.45,
+            top: 630,
             child: Container(
               width: MediaQuery.of(context).size.width,
               child: Center(
@@ -109,14 +97,17 @@ class BodyClass extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Text('swipe')),
+                          padding: EdgeInsets.only(left: 8),
+                          child: Text(
+                            'swipe',
+                            style: TextStyle(color: Colors.white),
+                          )),
                       Row(children: [
                         Icon(
                           Icons.arrow_back,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
-                        Icon(Icons.arrow_forward, color: Colors.black)
+                        Icon(Icons.arrow_forward, color: Colors.white)
                       ]),
                     ]),
               ),
@@ -225,17 +216,16 @@ class FirstPage extends StatelessWidget {
 }
 
 class SecondPage extends StatelessWidget {
-  final String text1, pic;
+  final String pic;
   final Widget Function() myClass;
   final Color color;
-  SecondPage([this.text1, this.myClass, this.color, this.pic]);
+  SecondPage([this.myClass, this.color, this.pic]);
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
       height: 600,
       width: 360,
-      // width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
           boxShadow: customShadow,
@@ -245,21 +235,12 @@ class SecondPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
-            height: 150,
-            width: 150,
             margin: EdgeInsets.symmetric(vertical: 20),
-            alignment: Alignment.center,
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: primaryColor),
-            child: Center(
-              child: Container(
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        color: color, width: 2.0, style: BorderStyle.solid),
-                    image: new DecorationImage(
-                        fit: BoxFit.cover, image: AssetImage('images/$pic'))),
-              ),
+            child: CircleAvatar(
+              radius: 75,
+              backgroundColor: color,
+              child: CircleAvatar(
+                  radius: 72, backgroundImage: AssetImage('images/$pic')),
             ),
           ),
           Expanded(child: myClass()),
@@ -306,12 +287,9 @@ class Cont1 extends StatelessWidget {
             child: Text(
               'I am warmed of mobile technologies. '
               'A Computer and technology enthusiast with '
-              'skillsets in html, css, java, kotlin and flutter '
+              'skill sets in html, css, java, kotlin and flutter '
               'programming languages',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black),
+              style: TextStyle(fontSize: 20, color: Colors.black),
             ),
           ),
         ]);
@@ -360,11 +338,13 @@ class ListCLass extends StatelessWidget {
 }
 
 List skills = [
-  {"name": "photoshop"},
-  {"name": "drumming"},
-  {"name": "writing"},
-  {"name": "speaking"},
-  {"name": "analytical"}
+  {"name": "problem solving"},
+  {"name": "critical thinking"},
+  {"name": "communication"},
+  {"name": "teamwork"},
+  {"name": "creativity"},
+  {"name": "attention to detail"},
+  {"name": "organization"}
 ];
 
 List pieColors = [
@@ -372,7 +352,9 @@ List pieColors = [
   Colors.indigo,
   Colors.red,
   Colors.orangeAccent,
-  Colors.black
+  Colors.blueAccent,
+  Colors.cyan,
+  Colors.brown
 ];
 
 Color primaryColor = Color(0xFFCDADCED);
